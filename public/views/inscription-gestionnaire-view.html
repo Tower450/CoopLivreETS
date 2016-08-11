@@ -1,0 +1,43 @@
+<div class="inscription-form clearfix" >
+
+    <form ng-show="affForm1" novalidate name="gestionnaireForm" role="form" class="col-md-6">
+        <h2>Formulaire Inscription Gestionnaire </h2>
+        <div  ng-if="error" class="alert alert-danger">
+            <a ng-disabled="checked" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Merde!</strong> Ce courriel est déjà utilisé.
+        </div>
+        <div class="form-group">
+            <label>Courriel</label>
+            <input class="form-control" ng-model="gestionnaire.email" ng-pattern="/^.*@.*\..{2,}$/i" id="inputEmail" placeholder="exemple@domaine.com" required/>
+            <span>Le format du courriel n'est pas valide.</span>
+        </div>
+        <div class="form-group">
+            <label>Mot de passe</label>
+            <input type="password" class="form-control" ng-model="gestionnaire.password" id="inputPassword" required>
+            <span>Le mot de passe est obligatoire.</span>
+        </div>
+        <div class="form-group">
+            <label>Confirmation du mot de passe</label>
+            <input type="password" class="form-control" ng-model="gestionnaire.passwordConfirmed" id="confirmPassword" compare-to="gestionnaire.password" required>
+            <span>Vos mots de passe ne sont pas identiques</span>
+        </div>
+        <button type="submit" ng-click="envoyerGestionnaireInfo()" class="btn btn-primary">Envoyer</button>
+    </form>
+
+    <form  ng-show="affForm2" novalidate name="coopForm" role="form" class="col-md-6">
+        <h2>Associer une Coop </h2>
+        <div class="form-group">
+            <label>Nom de la Coop</label>
+            <input type="" class="form-control" ng-model="coop.name" id="nomCoop" placeholder="" required/>
+        </div>
+        <div class="form-group">
+            <label>Adresse de la Coop</label>
+            <input type="" class="form-control" ng-model="coop.address" id="adresseCoop" placeholder="" required/>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary"  ng-click="envoyerGestionnaireCoopInfo()">Associer</button>
+    </form>
+
+</div>
+

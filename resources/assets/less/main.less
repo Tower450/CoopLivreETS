@@ -1,0 +1,80 @@
+@import "../bootstrap/bootstrap.less";
+@import "alertify.less";
+
+div.header{
+
+	padding: 20px 0px;
+
+    margin-bottom:40px;
+
+    .login-container{
+        float: right;
+        margin-top: 18px;
+    }
+    .title{
+        float: left;
+    }
+
+}
+
+.wrap{
+    max-width: 980px;
+    margin: auto;
+}
+
+a{
+    &.inscription {
+        font-size: 12px;
+    }
+}
+
+ul{
+    padding: 0;
+    li{
+        list-style: none;
+    }
+}
+
+input.ng-touched.ng-invalid-required:not(.ng-pristine),
+.ng-touched.ng-invalid-pattern,
+.ng-touched.ng-invalid{
+
+    border-color:red;
+    &+span{
+        display:inline;
+        font-size: 12px;
+        color:red;
+    }
+
+}
+
+input.ng-pristine,.ng-untouched,.ng-valid-pattern.ng-touched,.ng-valid{
+    &+span{
+        display: none;
+    }
+}
+
+div.login-container > div{
+  text-align: right;
+  padding-right: 16px;
+  padding-top: 10px;
+}
+
+.etudiant{
+  .nav-recuperation,.nav-remise,.nav-coop-ext{
+    display: none;
+  }
+}
+
+.gestionnaire{
+  .nav-ajout,.nav-reservation{
+    display: none;
+  }
+}
+
+h2{
+
+    width:500px;
+}
+
+

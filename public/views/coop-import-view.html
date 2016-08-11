@@ -1,0 +1,49 @@
+<div ng-show="isAuthenticated" class="coop-import clearfix wrap">
+    <div>
+        <h3>Réception de livre entre coopérative</h3>
+    </div>
+    <!-- Affichage de la liste de livres -->
+    <div class="clearfix wrap">
+        <div>
+            <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="livre in livres">
+                <div class="thumbnail" ng-click="selectionnerLivre(livre)">
+                    <img ng-src="{{livre.img}}" alt="{{livre.titre}}">
+                    <div class="caption">
+                        <h4>{{livre.title}}</h4>
+                        <p>Auteur: {{livre.author}}</p>
+                        <p>Coop: {{livre.coopName}}</p>
+                        <p>Adresse Coop: {{livre.coopAddress}}</p>
+                        <p><button class="btn btn-primary" role="button" ng-click="selectionnerLivre(livre)">Selectionner</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix wrap col-md-12" ng-if="livres.length == 0">
+                <strong>Aucun résultat trouvé.</strong>
+            </div>
+        </div>
+    </div> <!-- Fin de l'affichage de la liste de livres -->
+
+    <div class="clearfix wrap col-md-6" ng-if="livreSelectionne.length >= 1">
+        <h2>Livres sélectionner</h2>
+
+        <table class="table table-responsive">
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Coop</th>
+                <th>Adresse Coop</th>
+            </tr>
+            <tr ng-repeat="livre in livreSelectionne">
+                <td>{{livre.title}}</td>
+                <td>{{livre.author}}</td>
+                <td>{{livre.coopName}}</td>
+                <td>{{livre.coopAddress}}</td>
+                <td><button class="btn btn-primary btn-sm" ng-click="enleverLivre(livre)">Enlever</button></td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" ng-click="envoyer()">Recevoir les livres</button>
+    </div>
+</div>
+<div ng-hide="isAuthenticated">
+    <h5>Vous devez vous inscrire en tant que Gestionnaire pour gérer les transactions inter-coopératives</h5>
+</div>

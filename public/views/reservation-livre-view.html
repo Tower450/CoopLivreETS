@@ -1,0 +1,92 @@
+<div ng-show="isAuthenticated" class="reservation-livre-form clearfix wrap">
+
+    <h2>Réservation de livres</h2>
+
+    <div class="clearfix wrap form-inline">
+        <label>Recherche par </label>
+        <select class="form-control" name="choixRecherche" id="choixRecherche" ng-model="typeReservation" ng-change="resetAffichageLivre()">
+            <option value="0" ng-selected="selected">ISBN</option>
+            <option value="1">Titre</option>
+            <option value="2">Auteur</option>
+        </select>
+     </div>
+
+    <!-- Recherche livre par ISBN disponible pour une réservation -->
+    <div class="clearfix wrap">
+        <form role="form" class="form-inline" novalidate name="searchISBNForm" ng-show="typeReservation == 0" ng-submit="rechercherListeLivre()">
+            <div>
+                <label>Recherche ISBN</label>
+                 <input type="text" class="search-query form-control" ng-model="requete.isbn" required/>
+                 <button type="submit" class="btn btn-primary " ng-click="rechercherListeLivre('isbn')">Rechercher</button>
+            </div>
+        </form>
+        <div ng-show="afficherNotificationIsbn">
+            <h2>Aucun résultat n'a été trouvé, voudriez-vous recevoir une notification pour cet isbn?</h2>
+            <button type="submit" class="btn btn-primary " ng-click="ajouterNotification()">Notifiez moi!</button>
+        </div>
+    </div>
+
+    <!-- Recherche livre par le TITRE disponible pour une réservation -->
+    <div class="clearfix wrap">
+        <form role="form" class="form-inline" novalidate name="searchTitreForm" ng-show="typeReservation == 1" ng-submit="rechercherListeLivre()">
+            <div>
+                <label>Recherche par Titre du livre</label>
+                <input type="text" class="search-query form-control" ng-model="requete.title" required/>
+                <button type="submit" class="btn btn-primary" ng-click="rechercherListeLivre('title')">Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Recherche livre par l'Auteur disponible pour une réservation -->
+    <div class="clearfix wrap">
+        <form role="form" class="form-inline" novalidate name="searchAuteurForm" ng-show="typeReservation == 2" ng-submit="rechercherListeLivre()">
+            <div>
+                <label>Recherche par Auteur du livre</label>
+                <input  type="text" class="search-query form-control" ng-model="requete.author" required/>
+                <button type="submit" class="btn btn-primary" ng-click="rechercherListeLivre('author')">Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="description-livre-form clearfix wrap">
+        <form class="form-inline" ng-show="afficherChoixLivre" role="form" class="col-md-6" novalidate name="choixLivreForm">
+            <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="livre in livres">
+                <div class="thumbnail" ng-click="selectionnerLivre(livre)">
+                    <img ng-src="{{livre.image_link}}" alt="{{livre.title}}">
+                    <div class="caption">
+                        <h4>{{livre.title}}</h4>
+                        <p>Auteur: {{livre.author}}</p>
+                        <p>Prix: {{livre.price}}</p>
+                        <p><button class="btn btn-primary" role="button" ng-click="selectionnerLivre(livre)">Selectionner</button></p>
+                    </div>
+                </div>
+                <li class="animate-repeat" ng-if="results.length == 0">
+                    <strong>No results found...</strong>
+                </li>
+            </div>
+        </form>
+    </div>
+
+    <div class="description-livre-form clearfix wrap">
+        <form ng-show="afficherLivreChoisit" role="form" class="col-md-6" novalidate name="descriptionLivreForm">
+
+            <div>
+                <label for="" >Voici le livre selectionné</label>
+                <ul>
+                    <li>Titre: {{livre.title}}</li>
+                    <li>Auteur: {{livre.author}}</li>
+                    <li>Nombre de pages: {{livre.pages}}</li>
+                    <li>Prix: {{livre.price}}</li>
+                </ul>
+
+            </div>
+            <button class="btn btn-primary" id="reserver">Réservé</button>
+            <stripe-submit></stripe-submit>
+        </form>
+    </div>
+
+
+</div>
+<div ng-hide="isAuthenticated">
+    <h5>Vous devez vous inscrire en tant qu'étudiant réserver un livre</h5>
+</div>

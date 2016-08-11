@@ -1,0 +1,58 @@
+<div ng-show="isAuthenticated" class="recuperation-livre-form clearfix wrap">
+
+  <h2>Récuperation de livres</h2>
+
+  <div class="description-livre-form clearfix wrap">
+    <form class="form-inline" ng-show="afficherReservation" role="form" class="col-md-6" novalidate name="choixLivreForm">
+
+      <ul class="example-animate-container">
+        <h3>Voici la liste des réservation présente.</h3>
+        <div class="animate-repeat col-xs-6 col-sm-4 col-md-3" ng-repeat="reservation in lesReservations | filter:q as results" ng-click="selectionnerReservation({{reservation}})">
+
+          <div class="thumbnail">
+            <img ng-src="{{reservation.img}}" alt="{{reservation.titre}}">
+            <div class="caption">
+              <h4>{{reservation.title}}</h4>
+              <p>Auteur: {{reservation.author}}</p>
+              <p>Etudiant: {{reservation.studentName}}</p>
+              <p>Prix: {{reservation.price}}</p>
+              <p><button class="btn btn-primary" role="button" ng-click="selectionnerLivre(livre)">Selectionner</button></p>
+            </div>
+          </div>
+
+
+        </div>
+        <li class="animate-repeat" ng-if="results.length == 0">
+          <strong>Aucun résultat trouvé.</strong>
+        </li>
+      </ul>
+
+    </form>
+  </div>
+
+  <div class="description-livre-form clearfix wrap">
+    <form ng-show="afficherReservationChoisit" role="form" class="col-md-6" novalidate name="descriptionLivreForm">
+
+      <div>
+        <label for="" >Voici la réservation selectionné</label>
+
+        <ul>
+          <div class="caption">
+            <img ng-src="{{reservation.img}}" alt="{{reservation.title}}">
+            <h4>{{reservation.title}}</h4>
+            <p>Auteur: {{reservation.author}}</p>
+            <p>Pages: {{reservation.pages}}</p>
+            <p>Prix: {{reservation.price}}</p>
+          </div>
+        </ul>
+
+        <button class="btn btn-primary" ng-click="confirmerReservation({{reservation}})">Récupérer</button>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+<div ng-hide="isAuthenticated">
+  <h5>Vous devez vous inscrire en tant que Gestionnaire pour valider la réception d'un livre</h5>
+</div>

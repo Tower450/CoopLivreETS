@@ -1,0 +1,75 @@
+<div ng-show="isAuthenticated" class="ajout-livre-form clearfix wrap">
+    <div class="clearfix wrap">
+        <form role="form" novalidate name="searchISBNForm">
+            <h2>Ajout de livres</h2>
+            <div class="col-xs-12 col-sm-8 col-md-6">
+                <label >Recherche ISBN</label>
+                <input type="text" class="form-control search-query" ng-pattern="/^([0-9]{10}|[0-9]{13})$/i" ng-model="codeIsbn" required/>
+                <button type="submit" class="btn btn-primary btn-sm" ng-click="rechercherISBN()">Rechercher</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Affichage de la liste de livres -->
+    <div class="clearfix wrap" ng-show="afficherChoixLivre">
+        <div>
+            <div class="col-xs-8 col-sm-4 col-md-3" ng-repeat="livre in livres">
+                <div class="thumbnail" ng-click="selectionnerLivre(livre)">
+                    <div class="caption">
+                        <img ng-src="{{livre.image_link}}" alt="{{livre.title}}">
+                        <h4>{{livre.title}}</h4>
+                        <p>Auteur: {{livre.author}}</p>
+                        <p>Prix Neuf: {{livre.price}}</p>
+                        <p>Nombre Pages: {{livre.number_pages}}</p>
+                        <p><button class="btn btn-primary" role="button" ng-click="selectionnerLivre(livre)">Selectionner</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix wrap col-md-12" ng-if="livres.length == 0">
+                <strong>Pas de résultat trouvé.</strong>
+            </div>
+        </div>
+    </div> <!-- Fin de l'affichage de la liste de livres -->
+
+
+    <div class="description-livre-form clearfix wrap">
+        <div class="col-xs-12 col-sm-8 col-md-6">
+            <p class="animate-repeat" ng-hide="livreTrouve">
+                <strong style="color:darkgreen">Veuillez entrer les informations de votre livre</strong>
+            </p>
+            <form ng-show="afficherInfoManquante" role="form"  novalidate name="descriptionLivreForm">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input class="form-control" type="text" ng-model="livre.title"/>
+                </div>
+                <div class="form-group">
+                    <label>Auteur</label>
+                    <input class="form-control" type="text" ng-model="livre.author"/>
+                </div>
+                <div class="form-group">
+                    <label>Nombre de pages</label>
+                    <input class="form-control" type="text" ng-model="livre.pages"/>
+                </div>
+                <div class="form-group">
+                    <label>Prix neuf</label>
+                    <input class="form-control" type="text" ng-model="livre.price"/>
+                </div>
+                <div class="form-group">
+                    <label>État du livre</label>
+                    <select class="form-control" name="etat" id="etat" ng-model="livre.state">
+                        <option ng-repeat="etat in etats" value="{{etat.id}}">{{etat.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Prix vendu</label>
+                    <input class="form-control" type="text" ng-model="livre.prixDesirer" ng-value="{{livre.prixDesirer = livre.price * etats[livre.state].value}}" disabled/>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-click="ajouterLivre()">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div ng-hide="isAuthenticated">
+    <h5>Vous devez vous inscrire en tant qu'étudiant pour ajouter un livre</h5>
+</div>
